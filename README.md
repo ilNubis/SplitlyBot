@@ -4,7 +4,7 @@
  - Splitwise
 
 ## Utilità
- - utilissimo per gruppi di amici, coinquilini, viaggi.
+ - Utilissimo per gruppi di amici, coinquilini, viaggi.
 
 
 ## Richieste
