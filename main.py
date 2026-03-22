@@ -11,13 +11,14 @@ import os
 load_dotenv()
 
 API_TOKEN: str | None = os.getenv("BOT_TOKEN")
+print(API_TOKEN)
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
 
 # Initialize bot and dispatcher
-assert API_TOKEN != "{YOUR_TOKEN}" and (API_TOKEN is str), "ERRORE: TOKON invalido, non sai dove si prende? Guarda dentro 'Project setup.md'"
+assert API_TOKEN != "{YOUR_TOKEN}" and isinstance(API_TOKEN, str), "ERRORE: TOKON invalido, non sai dove si prende? Guarda dentro 'Project setup.md'"
 
 
 lang_manager: LanguageManager = LanguageManager("lang")
@@ -28,12 +29,6 @@ dp: Dispatcher = Dispatcher()
 
 @dp.message(UserLeftChat(bot.id))
 async def send_welcome(message: types.Message):
-
-    """
-
-    This handler will be called when user sends `/start` command
-
-    """
     print("Rip")
     #await message.reply("Hi!\nI'm SplitBot!")
 

@@ -25,11 +25,11 @@ class JDataStore:
     
 
     def _check_file_path(self, file_path: str | Path | None = None):
-        if file_path is str:
-            file_path = Path(file_path)
-
         if file_path is None:
             file_path = self.file_path
+        
+        if isinstance(file_path, str):
+            file_path = Path(file_path)
 
         assert file_path is Path, f"_check_file_path(): Expected 'file_path' to be a Path, but found {type(file_path)}"
         
