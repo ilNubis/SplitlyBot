@@ -31,9 +31,9 @@ class JDataStore:
         if isinstance(file_path, str):
             file_path = Path(file_path)
 
-        assert file_path is Path, f"_check_file_path(): Expected 'file_path' to be a Path, but found {type(file_path)}"
+        assert isinstance(file_path, Path), f"_check_file_path(): Expected 'file_path' to be a Path, but found {type(file_path)}"
         
-        if file_path.suffix != "json":
+        if file_path.suffix != ".json":
             raise FileSuffixError(f"Expected {self.file_path.parent}\\{self.file_path.stem}.json, but found {self.file_path}")
         
 
@@ -83,5 +83,8 @@ class JDataStore:
 
     def __iter__(self) -> Iterator[DictKey]:
         return self._data.__iter__()
+    
+    def __repr__(self) -> str:
+        return f"<JDataStore {self._data.__repr__()}>"
     
     

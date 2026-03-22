@@ -31,7 +31,7 @@ class LanguageManager:
 
 
     def _is_allowed_file(self, file: Path):
-        return file.exists() and file.is_file() and file.suffix == ".join"
+        return file.exists() and file.is_file() and file.suffix == ".json"
     
     # ------- Dict Wrappers -------
     def keys(self, lang: str) -> list[DictKey]:
@@ -44,6 +44,7 @@ class LanguageManager:
         return list(self.language_data[lang].items())
 
     def __getitem__(self, lang: DictKey, /) -> JDataStore:
+        print(self.language_data)
         return self.language_data[lang]
     
     # def __setitem__(self, lang: str, key: Any, value: Any, /) -> None:
