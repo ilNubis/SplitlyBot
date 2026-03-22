@@ -11,10 +11,13 @@ class UserJoinChat(Filter):
     async def __call__(self, *args: Any, **kwargs: Any) -> Union[bool, Dict[str, Any]]:
         msg: Message= args[0]
 
-        if not msg.new_chat_member:
+        if msg.new_chat_members is None:
             return False
-
-        return msg.new_chat_member["id"] == self.user_id
+        
+        for user in msg.new_chat_members:
+            if self.user_id == user.id:
+                return True
+        return False
 
 
 class UserLeftChat(Filter):
