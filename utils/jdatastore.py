@@ -1,5 +1,5 @@
-from custom_errors import FileSuffixError, ExpectedFileError
-from custom_typing import DictKey, DictValue
+from .custom_errors import FileSuffixError, ExpectedFileError
+from .custom_typing import DictKey, DictValue
 from typing_extensions import Any, Iterator
 from pathlib import Path
 import json 

@@ -1,6 +1,6 @@
-from custom_errors import MissingDirectoryError
-from custom_typing import DictKey, DictValue
-from typing_extensions import Any, Iterator
+from .custom_errors import MissingDirectoryError
+from .custom_typing import DictKey, DictValue
+from typing_extensions import Iterator
 from utils import JDataStore
 from pathlib import Path
 
@@ -43,8 +43,8 @@ class LanguageManager:
     def items(self, lang: str) -> list[tuple[DictKey, DictValue]]:
         return list(self.language_data[lang].items())
 
-    def __getitem__(self, lang: str, key: DictKey, /) -> DictValue:
-        return self.language_data[lang][key]
+    def __getitem__(self, lang: DictKey, /) -> JDataStore:
+        return self.language_data[lang]
     
     # def __setitem__(self, lang: str, key: Any, value: Any, /) -> None:
     #     self.language_data[lang][key] = value

@@ -1,7 +1,7 @@
 from aiogram import Bot, Dispatcher, types, filters
 from typing_extensions import Any
 from custom_aioutils.filters import UserLeftChat, UserJoinChat
-from custom_utils import JDataStore
+from utils import JDataStore, LanguageManager
 from dotenv import load_dotenv
 import logging
 import asyncio
@@ -20,9 +20,7 @@ logging.basicConfig(level=logging.INFO)
 assert API_TOKEN != "{YOUR_TOKEN}" and (API_TOKEN is str), "ERRORE: TOKON invalido, non sai dove si prende? Guarda dentro 'Project setup.md'"
 
 
-
-
-
+lang_manager: LanguageManager = LanguageManager("lang")
 
 bot: Bot = Bot(token=API_TOKEN) 
 dp: Dispatcher = Dispatcher()
@@ -44,6 +42,11 @@ async def send_welcome(message: types.Message):
 async def join_group(message: types.Message):
     await message.reply("Test")
 
+
+@dp.message()
+async def foo(message: types.Message):
+    print(message)
+    await message.reply(lang_manager["it"]["hello"])
 
 if __name__ == '__main__':
 
