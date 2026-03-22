@@ -17,7 +17,7 @@ class LanguageManager:
             raise MissingDirectoryError(f"base_path['{self.base_path}'] does not exist")
 
         if supported_lang is None:
-            supported_language = [file for file in self.base_path.iterdir() if self.is_allowed_file(file)]
+            supported_language = [file for file in self.base_path.iterdir() if self._is_allowed_file(file)]
         else:
             for file in supported_lang:
                 file = Path(file)
