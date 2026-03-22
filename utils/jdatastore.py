@@ -1,23 +1,13 @@
+from .custom_errors import FileSuffixError, ExpectedFileError
+from .custom_typing import DictKey, DictValue
 from typing_extensions import Any, Iterator
 from pathlib import Path
 import json 
 
 
 
-class FileSuffixError(ValueError):
-    pass
 
 
-class ExpectedFileError(ValueError):
-    pass
-
-
-class Key(Any):
-    pass
-
-
-class Value(Any):
-    pass
 
 
 
@@ -35,15 +25,15 @@ class JDataStore:
     
 
     def _check_file_path(self, file_path: str | Path | None = None):
-        if file_path is str:
-            file_path = Path(file_path)
-
         if file_path is None:
             file_path = self.file_path
-
-        assert file_path is Path, f"_check_file_path(): Expected 'file_path' to be a Path, but found {type(file_path)}"
         
-        if file_path.suffix != "json":
+        if isinstance(file_path, str):
+            file_path = Path(file_path)
+
+        assert isinstance(file_path, Path), f"_check_file_path(): Expected 'file_path' to be a Path, but found {type(file_path)}"
+        
+        if file_path.suffix != ".json":
             raise FileSuffixError(f"Expected {self.file_path.parent}\\{self.file_path.stem}.json, but found {self.file_path}")
         
 
@@ -73,25 +63,28 @@ class JDataStore:
         assert False, "TODO: _data_struct compatibility"
     
     # ------- Dict Wrappers -------
-    def keys(self) -> list[Key]:
+    def keys(self) -> list[DictKey]:
         return list(self._data.keys())
     
-    def values(self) -> list[Value]:
+    def values(self) -> list[DictValue]:
         return list(self._data.values())
     
-    def items(self) -> list[tuple[Key, Value]]:
+    def items(self) -> list[tuple[DictKey, DictValue]]:
         return list(self._data.items())
 
-    def __getitem__(self, key: Key, /) -> Value:
+    def __getitem__(self, key: DictKey, /) -> DictValue:
         return self._data[key]
     
-    def __setitem__(self, key: Key, value: Value, /) -> None:
+    def __setitem__(self, key: Any, value: Any, /) -> None:
         self._data[key] = value
     
-    def __delitem__(self, key: Key, /) -> None:
+    def __delitem__(self, key: DictKey, /) -> None:
         self._data.__delitem__(key)
 
-    def __iter__(self) -> Iterator[Key]:
+    def __iter__(self) -> Iterator[DictKey]:
         return self._data.__iter__()
+    
+    def __repr__(self) -> str:
+        return f"<JDataStore {self._data.__repr__()}>"
     
     
