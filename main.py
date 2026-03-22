@@ -1,5 +1,4 @@
 from aiogram import Bot, Dispatcher, types, filters
-from typing_extensions import Any
 from custom_aioutils.filters import UserLeftChat, UserJoinChat
 from utils import JDataStore, LanguageManager
 from dotenv import load_dotenv
@@ -32,15 +31,22 @@ async def send_welcome(message: types.Message):
     print("Rip")
     #await message.reply("Hi!\nI'm SplitBot!")
 
+
 # Dentro il gruppo starta da solo
 @dp.message(UserJoinChat(bot.id))
 async def join_group(message: types.Message):
     await message.reply("Test")
 
 
+@dp.message(filters.Command("start"))
+async def private_start(message: types.Message):
+    if message.chat.type == "private":
+        message.reply(lang_manager["it"]["start-priv"])
+
+
+
 @dp.message()
 async def foo(message: types.Message):
-    print(message)
     await message.reply(lang_manager["it"]["hello"])
 
 if __name__ == '__main__':
