@@ -1,5 +1,7 @@
 from aiogram import Bot, Dispatcher, types, filters
+from typing_extensions import Any
 from custom_aioutils.filters import UserLeftChat, UserJoinChat
+from custom_utils import JDataStore
 from dotenv import load_dotenv
 import logging
 import asyncio
@@ -8,14 +10,21 @@ import os
 
 load_dotenv()
 
-API_TOKEN: str = os.getenv("BOT_TOKEN")
+API_TOKEN: str | None = os.getenv("BOT_TOKEN")
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
 
 # Initialize bot and dispatcher
-bot: Bot = Bot(token=API_TOKEN)
+assert API_TOKEN != "{YOUR_TOKEN}" and (API_TOKEN is str), "ERRORE: TOKON invalido, non sai dove si prende? Guarda dentro 'Project setup.md'"
+
+
+
+
+
+
+bot: Bot = Bot(token=API_TOKEN) 
 dp: Dispatcher = Dispatcher()
 
 
@@ -37,5 +46,7 @@ async def join_group(message: types.Message):
 
 
 if __name__ == '__main__':
+
+
     logging.basicConfig(level=logging.INFO, stream=sys.stdout)
     asyncio.run(dp.start_polling(bot))
