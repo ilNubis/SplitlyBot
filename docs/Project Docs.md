@@ -5,6 +5,7 @@
 Questa "label" users_data ha come key-value l'id dell'utente
 
 Struttura `users_data` in json:
+
 ```json
 {
     "<user-id | int-value>": {
@@ -16,6 +17,7 @@ Struttura `users_data` in json:
 ```
 
 Struttura `users_data` in python:
+
 ```python
 users_data_struct = {
     int: {
@@ -29,6 +31,7 @@ users_data_struct = {
 Un database che ha come key-value l'id dei gruppi con un dizionario con le informazioni per utente
 
 Struttura per `<id-group>`:
+
 ```json
 {
     <id-group | int-value>: {
@@ -43,6 +46,7 @@ Struttura per `<id-group>`:
 ```
 
 Struttura `<event-cost>`:
+
 ```json
 {
     "title": <str-value>,
@@ -54,20 +58,17 @@ Struttura `<event-cost>`:
 
 ```
 
-
-
 ## Comando \start
 
 ### Interazione in privato
 
 Il bot risponde con
+
 ```
 Benvenuto {USERNAME}\n\n\n Se preferisci un'altra lingua puoi impostarla cliccando il pulsante *Lingua🌍*, altrimenti clicca *Continua*
 ```
 
-
 ### Quando viene cliccato il pulsante Lingua
-
 
 ```
 Seleziona la lingua attraverso i pulsanti qui sotto \\/
@@ -78,6 +79,7 @@ La generazione dei pulsanti deve essere fatta da codice e ogni bottone deve aver
 La distribuzione dei pulsanti deve essere verticale
 
 Esempio per estrarre i nomi di tutte le lingue:
+
 ```python
 
 from utils import LanguageManager
@@ -87,8 +89,8 @@ for lang in LanguageManager.language_data.values():
 
 ```
 
-
 Esempio:
+
 ```python
 @dp.message()
 async def handle_all_msg(message: types.Message):
@@ -96,6 +98,5 @@ async def handle_all_msg(message: types.Message):
     message.reply(language_pack["start-priv"])
 
 ```
-
 
 ### Interazione nel gruppo

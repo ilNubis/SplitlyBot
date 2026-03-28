@@ -42,7 +42,9 @@ Una volta creato il bot vi sarà dato un TOKEN(NON DOVETE DARLO A NESSUNO ALTRIM
 
 ## Secondo passo (Creare .env)
 
-Sostiuite "{YOUR_TOKEN}" con il token appena ottenuto, poi copiate e rimonominate il nome della copia del file con ".env"
+- Copiate `.template-env`
+- Sostiuite `{YOUR_TOKEN}` con il token del bot
+- Rimonominate il nome della copia di `.template-env` in `.env`
 
 ## Terzo passo (Creare e sistemare la venv)
 
