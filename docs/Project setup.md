@@ -1,6 +1,5 @@
 # Project Setup
 
-
 ## Premessa
 
 Attenzione, prima di proseguire avrete bisogno di installare la versione 3.14 di python
@@ -10,6 +9,7 @@ Vi consiglio di scaricarlo dal [sito ufficiale](https://www.python.org/downloads
 Se avete altre versioni di python, per non complicarvi la vita con disistallazioni o setup ulteriori, vi consiglio di creare un file e chiamarlo "py.bat".
 
 Copiate e incollate questo codice dentro quel file
+
 ```Batch
 
 @echo off
@@ -33,14 +33,12 @@ echo EXE_PATH: %EXE_PATH%
 
 ```
 
-
 ## Primo passo (Ottenere il token del bot di sviluppo)
 
 ### Il primo passo può essere saltato se avete già un TOKEN
 
 Andate su telegram e create un bot con [@BotFather](t.me/BotFather).
 Una volta creato il bot vi sarà dato un TOKEN(NON DOVETE DARLO A NESSUNO ALTRIMENTI SIETE FREGATI)
-
 
 ## Secondo passo (Creare .env)
 
@@ -49,6 +47,7 @@ Sostiuite "{YOUR_TOKEN}" con il token appena ottenuto, poi copiate e rimonominat
 ## Terzo passo (Creare e sistemare la venv)
 
 Create un virtual environment con python con il comando
+
 ```shell
 py -m venv venv
 ```
@@ -56,11 +55,13 @@ py -m venv venv
 ### Per avviare il virtual environment
 
 Se siete da cmd:
+
 ```shell
 .\venv\Scripts\activate.bat
 ```
 
 Se siete da PowerShell:
+
 ```shell
 .\venv\Scripts\activate.ps1
 ```
@@ -72,6 +73,7 @@ _**Prima di procedere per questo passo controllate di aver attivato il virtual e
 ### Integrare requirements.txt
 
 Questo comando avvierà l'installazione di tutte le librerie necessarie per lo sviluppo
+
 ```shell
 pip install -r requirements.txt
 ```
