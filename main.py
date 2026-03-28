@@ -17,10 +17,33 @@ logging.basicConfig(level=logging.INFO)
 
 
 # Initialize bot and dispatcher
-assert API_TOKEN != "{YOUR_TOKEN}" and isinstance(API_TOKEN, str), "ERRORE: TOKON invalido, non sai dove si prende? Guarda dentro 'Project setup.md'"
+assert API_TOKEN != "{YOUR_TOKEN}" and isinstance(API_TOKEN, str), "ERRORE: TOKEN invalido, non sai dove si prende? Guarda dentro 'Project setup.md'"
 
 
 lang_manager: LanguageManager = LanguageManager("lang")
+
+users_id_data: JDataStore = JDataStore("data/users.json", {
+    int: {
+        "name"    : str,
+        "language": str,
+        "groups": [int],
+    }
+})
+
+groups_id_data: JDataStore = JDataStore("data/groups.json", {
+    int: {
+        "name": str,
+        "total-cost": int,
+        "total-users": int,
+        "events": [{
+            "title": str,
+            "date": int,
+            "reason": str,
+            "request-from": int,
+            "cost": int
+        }]
+    }
+})
 
 bot: Bot = Bot(token=API_TOKEN) 
 dp: Dispatcher = Dispatcher()
@@ -40,9 +63,13 @@ async def join_group(message: types.Message):
 
 @dp.message(filters.Command("start"))
 async def private_start(message: types.Message):
-    if message.chat.type == "private":
-        message.reply(lang_manager["it"]["start-priv"])
+    language_pack: JDataStore = lang_manager[message.from_user.language_code]
 
+    print(message.chat.type)
+    if message.chat.type == "private":
+        await message.reply(language_pack["start-priv"])
+
+        
 
 
 @dp.message()

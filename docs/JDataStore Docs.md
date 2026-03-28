@@ -17,14 +17,14 @@ Esempio:
 ```python 
 type_struct = {
     int: {
-        "name": str,
+        "name": str,    
         "language": str,
         "groups": [int]
     }
 }
 ```
 
-L'esempio descrive che il valore di `type_struct[0]["name"]` deve essere `str`, se ad esempio venisse inserito un `int` nel file json, con la presenza di una type_struct nel momento del caricamento viene immediatamente scoperto il tipo errato.
+L'esempio descrive che il valore di `type_struct[0]["name"]` deve essere `str`, se ad esempio in quel campo venisse inserito un `int` nel file json, con la presenza di una type_struct nel momento del caricamento verrebbe immediatamente scoperto il tipo errato.
 
 È una funzione pensata esclusivamente per dare una struttura fissa all'archivio ed evitare ore di debug.
 

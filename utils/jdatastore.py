@@ -1,27 +1,21 @@
 from .custom_errors import FileSuffixError, ExpectedFileError
-from .custom_typing import DictKey, DictValue
 from typing_extensions import Any, Iterator
+from .custom_typing import DictKey, DictValue
+from .custom_types import StaticDict
 from pathlib import Path
 import json 
 
 
-
-
-
-
-
-
 class JDataStore:
-    def __init__(self, file_path: str | Path, data_struct: dict[Any, Any] | None = None, init_load: bool = True) -> None:
-        self._data_struct: dict[Any, Any] | None = data_struct
-        self.file_path   : Path                  = Path(file_path)
-        self._data       : dict[Any, Any]        = {}
-        self._loaded     : bool                  = False
+    def __init__(self, file_path: str | Path, type_struct: dict[Any, Any], init_load: bool = True) -> None:
+        self.file_path     : Path                  = Path(file_path)
+        self._data         : StaticDict            = StaticDict(type_struct)
+        self._loaded       : bool                  = False
 
         self._check_file_path()
 
         if init_load:
-            self._load(False)
+            self.load(False)
     
 
     def _check_file_path(self, file_path: str | Path | None = None):
@@ -42,25 +36,34 @@ class JDataStore:
 
 
         if not file_path.exists():
-            with open(self.file_path, "x"):
-                pass
-
+            with open(self.file_path, "x") as f:
+                f.write("{}")
 
         if file_path.is_dir():
             raise ExpectedFileError(f"Expected {self.file_path} to be a file, but found a directory")
-
+        
+        if self.file_path.stat().st_size == 0:
+            with open(self.file_path, "w") as f:
+                f.write("{}")
         
 
-    def _load(self, check_before_load: bool = True) -> None:
+
+    def load(self, check_before_load: bool = True) -> None:
         if check_before_load:
             self._check_file_path()
         
-        if self._data_struct is None:
-            with open(self.file_path, "r") as f:
-                self._data = json.load(f)
-            return
+        with open(self.file_path, "r") as f:
+            data = json.load(f)
+            self._data.eval_data(data, True)
         
-        assert False, "TODO: _data_struct compatibility"
+    
+    def save(self):
+        with open(self.file_path, "w") as f:
+            json.dump(
+                self._data.to_dict(True), 
+                f,
+                indent = 4
+                )
     
     # ------- Dict Wrappers -------
     def keys(self) -> list[DictKey]:
@@ -85,6 +88,6 @@ class JDataStore:
         return self._data.__iter__()
     
     def __repr__(self) -> str:
-        return f"<JDataStore {self._data.__repr__()}>"
+        return f"<JDataStore {self._data}>"
     
     
