@@ -5,3 +5,5 @@ foo.*
 
 __pycache__
 *.pyc
+
+data/*
