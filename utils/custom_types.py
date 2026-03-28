@@ -90,8 +90,19 @@ class PatternList(AdvType):
 
             if type(value) == type:
                 raise TypeError(f"Unsupported raw object-type '{value}' as value")
+            
+            if isinstance(value, dict):
+                if isinstance(value_type, StaticDict):
+                    value = value_type.struct_copy().eval_data(value, force_cohesion)
+                else: raise TypeError(f"Expected value-type '{value_type}', but found '{dict}'")
+            
+            if isinstance(value, list):
+                if isinstance(value_type, PatternList):
+                    value = value_type.pattern_copy().eval_data(value, force_cohesion)
+                else: raise TypeError(f"Expected value-type '{value_type}', but found '{list}'")
 
-            if force_cohesion:
+
+            if force_cohesion and not isinstance(value, (StaticDict, PatternList, dict, list)):
                 value = self._force_type(value, value_type)
                 data[index] = value
 
@@ -220,12 +231,12 @@ class StaticDict(AdvType):
             if isinstance(value, dict):
                 if isinstance(self._type_struct[key_type], StaticDict):
                     value = self._type_struct[key_type].struct_copy().eval_data(value, force_cohesion)
-                else: raise TypeError(f"Expected value-type '{self._type_struct[key]}', but found '{value}'")
+                else: raise TypeError(f"Expected value-type '{self._type_struct[key_type]}', but found '{dict}'")
             
             if isinstance(value, list):
                 if isinstance(self._type_struct[key_type], PatternList):
                     value = self._type_struct[key_type].pattern_copy().eval_data(value, force_cohesion)
-                else: raise TypeError(f"Expected value-type '{self._type_struct[key]}', but found '{value}'")
+                else: raise TypeError(f"Expected value-type '{self._type_struct[key_type]}', but found '{list}'")
 
             if force_cohesion and not isinstance(value, (StaticDict, PatternList, dict, list)):
                 value = self._force_type(value, self._type_struct[key_type])
