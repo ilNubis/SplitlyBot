@@ -7,7 +7,11 @@ import json
 
 
 class JDataStore:
-    def __init__(self, file_path: str | Path, type_struct: dict[Any, Any], init_load: bool = True) -> None:
+    def __init__(self, file_path: str | Path,
+                 type_struct: dict[Any, Any], 
+                 init_load: bool = True, 
+                 force_cohesion: bool = False
+                 ) -> None:
         self.file_path     : Path                  = Path(file_path)
         self._data         : StaticDict            = StaticDict(type_struct)
         self._loaded       : bool                  = False
@@ -15,7 +19,7 @@ class JDataStore:
         self._check_file_path()
 
         if init_load:
-            self.load(False)
+            self.load(False, force_cohesion)
     
 
     def _check_file_path(self, file_path: str | Path | None = None):
@@ -48,13 +52,13 @@ class JDataStore:
         
 
 
-    def load(self, check_before_load: bool = True) -> None:
+    def load(self, check_before_load: bool = True, force_cohesion: bool = True) -> None:
         if check_before_load:
             self._check_file_path()
         
         with open(self.file_path, "r") as f:
             data = json.load(f)
-            self._data.eval_data(data, True)
+            self._data.eval_data(data, force_cohesion)
         
     
     def save(self):
