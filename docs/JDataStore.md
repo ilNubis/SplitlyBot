@@ -39,7 +39,7 @@ Se **True**, tenta di caricare i dati dal file al momento dell'inizializzazione.
 
 ### force_cohesion: bool, **\<opzionale\>**
 
-Se **True**, durante il caricamento del file tenta di forzare la conversione dei dati in quelli voluti dalla type_struct. Se **False**, i dati vengono caricati secondo le regole di json.
+Se **True**, durante il caricamento del file tenta di forzare la conversione dei dati in quelli voluti dalla type_struct. Se **False**, i dati vengono caricati secondo le "regole" di json.
 
 Utile per avere come key-value valori diversi dalle stringhe all'interno del JDataStore
 
@@ -48,15 +48,24 @@ Utile per avere come key-value valori diversi dalle stringhe all'interno del JDa
 - Questo metodo prepara l'oggetto per essere usato come "database".
 - `file_path` indica dove salvare e leggere i dati.
 - `type_struct` è la forma base dei dati.
-- `init_load` decide se partire dai dati del file.
+- `init_load` decide se caricare i dati del file immediatamente dopo l'inizzializzazione.
+- `force_cohesion` decide se seguire o meno le "regole" di json
 
-## `.load(check_before_load: bool = True) -> None:`
+## `.load(check_before_load: bool = True, force_cohesion: bool = False) -> None:`
 
 Carica il contenuto del file
 
 ### check_before_load: bool, **\<opzionale\>**
 
 Se **True**, viene chiamato il metodo `_check_file_path()` che si occupa di controllare la vailidità del percorso. Se **False**, si disattiva il controllo per consentire più margine di manovra
+
+### force_cohesion: bool, **\<opzionale\>**
+
+Se **True**, durante il caricamento del file tenta di forzare la conversione dei dati in quelli voluti dalla type_struct. Se **False**, i dati vengono caricati secondo le "regole" di json.
+
+## .save()
+
+Salva il file nel percorso indicato durante l'inizializzazione 
 
 ## Note
 
